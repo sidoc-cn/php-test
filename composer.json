@@ -1,0 +1,27 @@
+{
+    "name": "sidoc/php-tool-library",
+    "description": "PHP自定义代码工具库",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "YANGWW",
+            "email": "512113110@qq.com"
+        }
+    ],
+    "require": {
+    	"php":">=5.5.0",
+        "topthink/think-image":">=1.0",
+        "topthink/think-captcha": ">=1.0",
+        "qcloud/cos-sdk-v5": "^2.3.4",
+        "qiniu/php-sdk": "^7.2",
+        "tencentcloud/tencentcloud-sdk-php": "^3.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "sidoc\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}

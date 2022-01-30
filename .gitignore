@@ -1,0 +1,12 @@
+composer.lock
+vendor
+
+# 忽略账户配置文件
+*accountConfig_v*.php
+
+.idea/
+.DS_Store
+
+*.phar
+*.zip
+

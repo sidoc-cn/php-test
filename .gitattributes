@@ -1,0 +1,28 @@
+# .gitattributes
+
+# .gitattributes用于定义文件属性，以方便git统一管理文件；定义格式如下：
+# 要匹配的文件模式 属性1 属性2 ...
+
+
+# export-ignorentnt属性用于定义从仓库下载项目zip包时，应该忽略的文件；
+# 如下，在从git仓库中下载项目时，test.txt文件将不会包含在zip包里；
+# test.txt export-ignore
+
+# PHP中，使用composer install安装第三方库时，实际是以zip包的方式从第三方Git库中下载项目；因此需要忽略某些使用者无需用到的文件； 
+
+# 忽略.git文件夹
+.git export-ignore
+
+# 忽略测试文件夹
+tests export-ignore
+
+# 忽略其它文件
+.vscode export-ignore
+commit_code.bat export-ignore
+commit.command export-ignore
+commit.sh export-ignore
+.gitattributes export-ignore
+composer.lock export-ignore
+
+
+

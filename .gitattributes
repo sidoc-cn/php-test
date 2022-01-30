@@ -24,6 +24,7 @@ commit.command export-ignore
 commit.sh export-ignore
 .gitattributes export-ignore
 composer.lock export-ignore
+.gitignore export-ignore
 
 
 

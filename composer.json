@@ -1,5 +1,5 @@
 {
-    "name": "sidoc/php-test",
+    "name": "sidoc/php-tool-library",
     "description": "PHP自定义代码工具库",
     "license": "MIT",
     "authors": [
@@ -19,7 +19,8 @@
     "autoload": {
         "psr-4": {
             "sidoc\\": "src/"
-        }
+        },
+        "files":[]
     },
     "config": {
         "preferred-install": "dist"

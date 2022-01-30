@@ -9,6 +9,7 @@
 # test.txt export-ignore
 
 # PHP中，使用composer install安装第三方库时，实际是以zip包的方式从第三方Git库中下载项目；因此需要忽略某些使用者无需用到的文件； 
+# 注：仓库放在coding.net上，使用composer install安装时，.gitattributes文件的定义是无效的；因此请务必将需要发布为composer包的项目放在github上；
 
 # 忽略.git文件夹
 .git export-ignore

@@ -11,7 +11,7 @@ class LogTools{
         */
     static public function logList(){
         
-        $logPath = runtime_path();
+        $logPath = runtime_path()."/log/";
 
         // 日志目录不存在
         if(!file_exists($logPath)){
@@ -19,23 +19,21 @@ class LogTools{
         }
 
         // 获取所有月份的日志
-        $allLogList = scandir(LOG_PATH,SCANDIR_SORT_NONE);
+        // scandir用于列出指定路径中的文件和目录
+        $allLogList = scandir($logPath);
         if(count($allLogList) <= 0){
             return null;
         }
 
         // 获取最后一天的日志
         $lastMonthLog = end($allLogList);
-        $dayLogList = scandir(LOG_PATH.$lastMonthLog,SCANDIR_SORT_NONE);
+        $dayLogList = scandir($logPath.$lastMonthLog,SCANDIR_SORT_NONE);
         if(count($dayLogList) <= 0){
             return null;
         }
 
         $arr = array();
         foreach ($dayLogList as $value){
-    //            if($value == "." || $value == ".."){
-    //                continue;
-    //            }
             // 仅返回命令行和错误日志
             if(strpos($value,'error') !== false || strpos($value,'cli') !== false){
                 array_push($arr,$value);
@@ -47,7 +45,7 @@ class LogTools{
         }
 
         $result['logList'] = $arr;
-        $result['logFolder'] = LOG_PATH.$lastMonthLog;
+        $result['logFolder'] = $logPath.$lastMonthLog;
         return $result;
     }
 

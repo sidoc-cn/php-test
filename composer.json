@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-    	"php":">=5.5.0",
+        "php": ">=7.1.0",
         "topthink/think-image":">=1.0",
         "topthink/think-captcha": ">=1.0",
         "qcloud/cos-sdk-v5": "^2.3.4",

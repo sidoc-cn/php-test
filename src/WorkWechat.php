@@ -8,7 +8,12 @@ use Throwable;
 // 企业微信
 class WorkWechat {
 
-    // 发送异常消息
+    // 发送通知消息给管理员
+    static public function notiMessage($title,$content){
+        self::sendMessageToAdmin($title,$content,"通知消息");
+    }
+
+    // 发送异常消息给管理员
     static public function reportException($exception){
         try{
             // 不要上报404、403等HTTP请求异常
@@ -26,7 +31,7 @@ class WorkWechat {
             if(method_exists($exception,'getStatusCode')){
                 $message .= ("<div class=\"normal\">HTTP状态码：".$exception->getStatusCode()."</div>");
             }
-            self::sendMessageToAdmin("系统发生异常，请尽快处理！",$message);
+            self::sendMessageToAdmin("系统发生异常，请尽快处理！",$message,"异常上报");
         }catch (Throwable $e){
             // 捕获所有异常，避免异常循环上报
             Log::error($e->__toString());
@@ -35,7 +40,7 @@ class WorkWechat {
 
 
     // 发送消息至管理员
-    static private function sendMessageToAdmin($title,$message){
+    static private function sendMessageToAdmin($title,$message,$messageType){
        
         $param = [
             "touser"=>'YANGWW',   // 消息接收人
@@ -45,7 +50,7 @@ class WorkWechat {
                 "title"=>$title,
                 "description"=>$message,
                 "url"=>"https:www.sidoc.cn",
-                "btntxt"=>"异常上报"
+                "btntxt"=>$messageType
             ],
         ];
         $param = json_encode($param);

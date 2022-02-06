@@ -10,13 +10,13 @@ use Qcloud\Cos\Client;
 class TencenyunCos{
 
     /**
-        * 从COS的user bucket中删除文件
-        *
-        * @param $user_id  用户ID
-        * @param $filePath 文件路径
-        * @return bool|\Exception
-        * @throws \Exception
-        */
+    * 从COS的user bucket中删除文件
+    *
+    * @param $user_id  用户ID
+    * @param $filePath 文件路径
+    * @return bool|\Exception
+    * @throws \Exception
+    */
     static function deleteFileFromCosUser($user_id,$filePath){
 
         if(empty($user_id)){
@@ -44,8 +44,7 @@ class TencenyunCos{
             $result = $cosClient->deleteObject(array(
                 'Bucket' => 'user-10051824', // bucket 的命名规则为{bucketName}-{appid}
                 'Key' => $key
-                ));
-
+            ));
         } catch (\Exception $e) {
             throw $e;
         }

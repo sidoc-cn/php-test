@@ -39,7 +39,9 @@ class RemoteCallTools{
         }
 
         if(empty($data)){
-            throw new \Exception('参数不能为空');
+            // 此处不能抛出异常，以便外部能够兼容处理其它业务逻辑
+            // throw new \Exception('参数不能为空');  
+            return null;
         }
 
         // 解密并获取参数内容

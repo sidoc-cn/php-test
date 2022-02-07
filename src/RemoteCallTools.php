@@ -89,8 +89,8 @@ class RemoteCallTools{
         curl_setopt($ch, CURLOPT_TIMEOUT,14);
 
         // 设置请求头
-        $headers = array_merge( array(
-            "Authorization:''"
+        $headers = array_merge(array(
+            "request-source:'remote-call-tool'"
         ),$headers);
         curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
 

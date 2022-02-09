@@ -104,9 +104,6 @@ class RemoteCallTools{
         // 打包、加密参数
         $param = self::dataPackaging($param);
 
-        // 构建请求URL
-        $path = self::baseUrl($path).$path;
-
         if($requestMethod == 'post'){
             curl_setopt($ch, CURLOPT_POST, true);         // 请求方式
             curl_setopt($ch, CURLOPT_POSTFIELDS,array('p'=>$param)); // post请求数据
@@ -127,23 +124,6 @@ class RemoteCallTools{
 
         return Tools::verifyParam(urldecode($responseContent))['data'];
     }
-
-
-    // 获取环境信息
-    private static function baseUrl($path){
-
-        // 若路径本身就有基地址，则直接返回
-        if(substr($path,0,4) == "http"){
-            return "";
-        }
-
-        if(env === 'online') {               // 线上生产环境 ++++++++++++++++++++++++++++++++++++++++++++++++++
-            return "https://www.sidoc.cn/";
-        }else{
-            return "http://localhost/";
-        }
-    }
-
 
     // 上传文件
     public static function uploadFile($url,$param){

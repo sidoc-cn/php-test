@@ -26,7 +26,7 @@ class SSLCertificate{
             if($status != 0){
                 Log::error("重启nginx - 重启nginx失败,错误信息如下：");
                 Log::error($out);
-                throw new Exception("部署SSL证书时发生错误","重启nginx失败,错误信息如下:".json_encode($out));
+                throw new Exception("部署SSL证书时发生错误","重启nginx失败,错误信息如下:".json_encode($out,JSON_UNESCAPED_UNICODE));
             }
         }
     }

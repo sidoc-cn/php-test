@@ -16,7 +16,7 @@ class UploadFile{
         $tempFolder = PUBLIC_PATH.'static'.DIRECTORY_SEPARATOR.'common'.DIRECTORY_SEPARATOR.'temp'.DIRECTORY_SEPARATOR;  // 文件存储的临时目录
         if (!file_exists($tempFolder.$user_id)){ // 目录不存在，则创建
             if(!(FileUtil::createDir($tempFolder.$user_id))){
-                return json_encode(array("errorMsg"=>"文件上传失败，请刷新页面后重试！"));
+                return json_encode(array("errorMsg"=>"文件上传失败，请刷新页面后重试！"),JSON_UNESCAPED_UNICODE);
             }
         }
 

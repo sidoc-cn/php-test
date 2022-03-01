@@ -11,7 +11,7 @@ class ExceptionService{
     /**
     * 上报异常
     *
-    * 示例：ExceptionService::report($title,$content.":".json_encode($e->getMessage()),__FILE__, __LINE__); 
+    * 示例：ExceptionService::report($title,$content.":".json_encode($e->getMessage(),JSON_UNESCAPED_UNICODE),__FILE__, __LINE__); 
     * @param [type] $title
     * @param [type] $content
     * @param [type] $file

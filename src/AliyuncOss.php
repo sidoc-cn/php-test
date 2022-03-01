@@ -42,7 +42,7 @@ class AliyuncOss{
       } catch (OssException $e) {
          $title = "阿里云对象存储OSS报错";
          $content = "阿里云对象存储OSS在 保存静态页面 时发生错误";
-         ExceptionService::report($title,$content.":".json_encode($e->getMessage()),__FILE__, __LINE__);
+         ExceptionService::report($title,$content.":".json_encode($e->getMessage(),JSON_UNESCAPED_UNICODE),__FILE__, __LINE__);
          throw new HttpException(500,"保存失败");
       }
    }
@@ -68,7 +68,7 @@ class AliyuncOss{
       } catch (OssException $e) {
          $title = "阿里云对象存储OSS报错";
          $content = "阿里云对象存储OSS在 获取静态页面 时发生错误";
-         ExceptionService::report($title,$content.":".json_encode($e->getMessage()),__FILE__, __LINE__);
+         ExceptionService::report($title,$content.":".json_encode($e->getMessage(),JSON_UNESCAPED_UNICODE),__FILE__, __LINE__);
          throw new HttpException(404,"页面找回不到了");
       }
    }
@@ -94,7 +94,7 @@ class AliyuncOss{
       } catch (OssException $e) {
          $title = "[".env."]阿里云对象存储OSS报错";
          $content = "阿里云对象存储OSS在 删除静态页面 时发生错误";
-         ExceptionService::report($title,$content.':'.json_encode($e->getMessage()),__FILE__, __LINE__);
+         ExceptionService::report($title,$content.':'.json_encode($e->getMessage(),JSON_UNESCAPED_UNICODE),__FILE__, __LINE__);
          throw new HttpException(500,"删除失败");
       }
    }

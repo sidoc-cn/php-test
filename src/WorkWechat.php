@@ -53,7 +53,7 @@ class WorkWechat {
                 "btntxt"=>$messageType
             ],
         ];
-        $param = json_encode($param);
+        $param = json_encode($param,JSON_UNESCAPED_UNICODE);
 
         // 获取access_token,该接口不能频繁调用，必须缓存access_token
         $url = "https://qyapi.weixin.qq.com/cgi-bin/message/send?debug=1&access_token=".self::getToken();
@@ -73,7 +73,7 @@ class WorkWechat {
 
         if($responseInfo['http_code'] != 200){
             Log::error("企业微信发送消息时发生错误：");
-            Log::error(json_encode($responseInfo));
+            Log::error(json_encode($responseInfo),JSON_UNESCAPED_UNICODE);
         }
         
         $token_jsonarr = json_decode($responseContent, true);

@@ -29,7 +29,7 @@ class Tools{
         * @return string
         */
     static public function encryptionParam($p){
-        return urlencode(Tools::symmetryEncrypt(json_encode($p),self::$paramEncryptionKey));
+        return urlencode(Tools::symmetryEncrypt(json_encode($p,JSON_UNESCAPED_UNICODE),self::$paramEncryptionKey));
     }
 
 

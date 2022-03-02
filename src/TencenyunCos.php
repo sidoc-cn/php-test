@@ -49,9 +49,9 @@ class TencenyunCos{
         
         try {
             $result = $client->upload(
-                $bucket = $bucket,   //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
-                $key = $path, //此处的 key 为对象键
-                $body = fopen($filePath, 'rb')
+                $bucket,  // 存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
+                $path,    // 此处的 key 为对象键
+                fopen($filePath, 'rb')
             );
             // 请求成功
             print_r($result);

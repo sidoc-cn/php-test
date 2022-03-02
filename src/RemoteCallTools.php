@@ -31,17 +31,16 @@ class RemoteCallTools{
     * @return mixed
     * @throws \Exception
     */
-    static public function dataParse($data=null,$isVerificationTime=true){
+    static public function dataParse($isAllowEmpty=false,$isVerificationTime=true){
         
-        // 默认获取请求参数中的p
-        if($data == null){
-            $data = request()->param("p");    
-        }
-
+        // 参数验证
+        $data = request()->param("p");
         if(empty($data)){
-            // 此处不能抛出异常，以便外部能够兼容处理其它业务逻辑
-            // throw new \Exception('参数不能为空');  
-            return null;
+            if($isAllowEmpty){
+                return null;
+            }else{
+                throw new \Exception('参数不能为空');  
+            }
         }
 
         // 解密并获取参数内容

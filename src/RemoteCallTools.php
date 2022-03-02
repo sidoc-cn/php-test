@@ -21,16 +21,15 @@ class RemoteCallTools{
     }
 
     /**
-    * 数据解析
-    *
-    * 远程请求时，必须开启数据有效时间验证，否则请求被若被拦截，将对服务器安全造成威胁；
-    * 消息队列接收数据时，请关闭数据有效时间验证；否则队列中被阻塞的消息将无法通过时间验证；
-    *
-    * @param $data
-    * @param bool $isVerificationTime 解析数据时，是否验证数据有效时间
-    * @return mixed
-    * @throws \Exception
-    */
+     * 数据解析
+     *
+     * 远程请求时，必须开启数据有效时间验证，否则请求被若被拦截，将对服务器安全造成威胁；
+     * 消息队列接收数据时，请关闭数据有效时间验证；否则队列中被阻塞的消息将无法通过时间验证；
+     *
+     * @param boolean $isAllowEmpty
+     * @param boolean $isVerificationTime 解析数据时，是否验证数据有效时间
+     * @return void
+     */
     static public function dataParse($isAllowEmpty=false,$isVerificationTime=true){
         
         // 参数验证

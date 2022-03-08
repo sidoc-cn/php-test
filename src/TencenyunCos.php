@@ -18,7 +18,7 @@ class TencenyunCos{
             $bucket = 'static-test-1251340588';
             $region = 'ap-nanjing';
         }else{
-            $bucket = 'sidoc-10051824';
+            $bucket = 'static-10051824';
             $region = 'ap-shanghai';
         }
 

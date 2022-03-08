@@ -2,6 +2,7 @@
 
 namespace sidoc;
 
+use think\facade\Env;
 use think\facade\Log;
 use Throwable;
 
@@ -41,11 +42,11 @@ class WorkWechat {
 
     // 发送消息至管理员
     static private function sendMessageToAdmin($title,$message,$messageType){
-       
+     
         $param = [
             "touser"=>'YANGWW',   // 消息接收人
             "msgtype"=>'textcard',    // 消息类型
-            "agentid"=>work_wechat_sidoc_admin_id, // 企业微信自建应用的ID
+            "agentid"=>Env::get('APP_DEBUG')?work_wechat_sidoc_admin_id_dev:work_wechat_sidoc_admin_id, // 企业微信自建应用的ID
             "textcard"=>[             // 消息内容
                 "title"=>$title,
                 "description"=>$message,
@@ -96,8 +97,14 @@ class WorkWechat {
             return $access_token;
         }
 
+        if(Env::get('APP_DEBUG')){
+            $corpsecret = work_wechat_corpsecret_dev;
+        }else{
+            $corpsecret = work_wechat_corpsecret;
+        }
+   
         // 0.2> 从微信服务器请求access_token
-        $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=".work_wechat_corpid."&corpsecret=".work_wechat_corpsecret;
+        $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=".work_wechat_corpid."&corpsecret=".$corpsecret;
         $access_token_Arr =  file_get_contents($url);
         $token_jsonarr = json_decode($access_token_Arr, true);
         if(array_key_exists('errcode',$token_jsonarr) && $token_jsonarr['errcode'] != 0){

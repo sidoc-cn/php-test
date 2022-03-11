@@ -59,7 +59,7 @@ class DatabaseBackup {
    
         // 0.3> 更新任务状态 --------------------------------------------------------------------
         $arr['id'] = $taskId;
-        $arr['des'] = "Sidoc后台管理备份完成，耗时".$timeConsuming."秒";
+        $arr['des'] = "数据备份完成，耗时".$timeConsuming."秒";
         $arr['status'] = "normal";
         $domain = Env::get('SIDOC_ADMIN_SERVICE');
         RemoteCallTools::request($domain."/task/updateTask",$arr);

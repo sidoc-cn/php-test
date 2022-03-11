@@ -24,7 +24,7 @@ define('FILE_ENCRYPTION_BLOCKS', 10000);
 class FileEncryption{
 
     /**
-     * 加密文件，并将结果保存在一个以“.enc”为后缀的新文件中
+     * 加密文件
      *
      * @param string $source 需要加密的文件路径
      * @param string $key 用于加密的密钥

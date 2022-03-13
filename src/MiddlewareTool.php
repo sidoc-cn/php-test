@@ -15,7 +15,7 @@ class MiddlewareTool {
      * @param [type] $request
      * @return void
      */
-    static  function getToken($request) {
+    static public function getToken($request) {
 
         // 0.1> 获取token（分别兼容从请求头、请求参数和Cookie中来获取token）
         $token = $request->header("authorization");
@@ -40,7 +40,7 @@ class MiddlewareTool {
      * @param [type] $token
      * @return void
      */
-    static  function verifyToken($token) {
+    static public function verifyToken($token) {
 
         $authInfo = null;
         if($token){

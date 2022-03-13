@@ -120,7 +120,4 @@ class MiddlewareTool {
         return $domain;
     }
 
-
-
-
 }

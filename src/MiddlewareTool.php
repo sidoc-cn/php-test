@@ -96,7 +96,20 @@ class MiddlewareTool {
         // 参数secure：cookie是否只能通过https发送
         // 参数httponly：是否只能通过http协议访问cookie
         // 配置详见：https://www.php.net/manual/zh/function.setcookie.php
-        setcookie("authorization",$token,$expires,'/',$domain,false,true);
+        setcookie("authorization","",$expires,'/',$domain,false,true);
     }
+
+    /**
+     * 删除cookie
+     * 对于未前后分离的项目，当token过期或失效时，应立即清除Cookie
+     *
+     * @return void
+     */
+    static public function deleteCookie() {
+        setcookie("authorization","",time()-3600);
+    }
+
+
+
 
 }

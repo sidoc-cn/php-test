@@ -3,6 +3,7 @@
 namespace sidoc;
 
 use think\facade\Cookie;
+use think\facade\Env;
 
 // 中间件常用工具封装
 class MiddlewareTool {
@@ -33,11 +34,21 @@ class MiddlewareTool {
         return $token;
     }
 
+    /**
+     * 验证Token
+     *
+     * @param [type] $token
+     * @return void
+     */
+    static  function verifyToken($token) {
 
-    
-
-
-
+        $authInfo = null;
+        if($token){
+            // 被远程请求的服务必须删除Trace，否则将无法输出纯字符串，以致加解密错误，详见：https://www.sidoc.cn/doc/1124.html
+            $authInfo = RemoteCallTools::request(Env::get('SIDOC_USER_SERVICE')."/auth",['token'=>$token]);
+        }
+        return $authInfo;
+    }
 
 
 }

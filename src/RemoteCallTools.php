@@ -88,7 +88,7 @@ class RemoteCallTools{
 
         // 设置请求头
         $headers = array_merge(array(
-            "request-source:'remote-call-tool'"
+            "request-source:remote-call-tool" // 重要：此请求头标志着请求由系统内部API调用发起，部分场景可用于辨别请求，不可删除
         ),$headers);
         curl_setopt($ch, CURLOPT_HTTPHEADER,$headers);
 

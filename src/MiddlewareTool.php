@@ -80,6 +80,33 @@ class MiddlewareTool {
         // 在cookie中保存token
         // cookie域名有效性设置：http://www.cnblogs.com/fsjohnhuang/archive/2011/11/22/2258999.html
         // setcookie("cookieName","cookieValue, 0, "/", ".test.com"); // 过期时间为0，表示浏览器关闭时销毁cookie;
+        
+        // 作用域："abc.com" 可以在abc.com主域名之下的多级子域名有效
+        //       ".abc.com" 只能在二级域名以及"www.abc.com"下有效
+        // 参数secure：cookie是否只能通过https发送
+        // 参数httponly：是否只能通过http协议访问cookie
+        // 配置详见：https://www.php.net/manual/zh/function.setcookie.php
+        setcookie("authorization","",$expires,'/',self::firstLevelDomain(),false,true);
+    }
+
+    /**
+     * 删除cookie
+     * 对于未前后分离的项目，当token过期或失效时，应立即清除Cookie
+     *
+     * @return void
+     */
+    static public function deleteCookie() {
+
+        // 名称相同的cokie,只要域名不同，就可以同时存在，例如：域名sidoc.cn和www.sidoc.cn下可以有名称相同的cookie,两个cookie都起作用，为了确保安全，此处遍历清除所有cookie;
+        // 清空当前域名下所有cookie
+        foreach($_COOKIE as $key=>$value){
+            setcookie($key,"",time()-3600,'/',self::firstLevelDomain());
+            // setcookie("authorization","",time()-3600);
+        }
+    }
+
+    // 获取一级域名
+    static private function firstLevelDomain(){
 
         $httpHost = $_SERVER['HTTP_HOST'];
         if(filter_var($httpHost, FILTER_VALIDATE_IP)){ // 判断是否为ip
@@ -90,23 +117,7 @@ class MiddlewareTool {
             $arr = explode(".",$httpHost);
             $domain = $arr[count($arr)-2].".".$arr[count($arr)-1];
         }
-        
-        // 作用域："abc.com" 可以在abc.com主域名之下的多级子域名有效
-        //       ".abc.com" 只能在二级域名以及"www.abc.com"下有效
-        // 参数secure：cookie是否只能通过https发送
-        // 参数httponly：是否只能通过http协议访问cookie
-        // 配置详见：https://www.php.net/manual/zh/function.setcookie.php
-        setcookie("authorization","",$expires,'/',$domain,false,true);
-    }
-
-    /**
-     * 删除cookie
-     * 对于未前后分离的项目，当token过期或失效时，应立即清除Cookie
-     *
-     * @return void
-     */
-    static public function deleteCookie() {
-        setcookie("authorization","",time()-3600);
+        return $domain;
     }
 
 

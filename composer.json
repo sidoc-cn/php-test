@@ -12,9 +12,9 @@
     	"php":">=5.5.0",
         "topthink/think-image":">=1.0",
         "topthink/think-captcha": ">=1.0",
-        "qcloud/cos-sdk-v5": "^2.3.4",
-        "qiniu/php-sdk": "^7.2",
-        "tencentcloud/tencentcloud-sdk-php": "^3.0.0"
+        "qcloud/cos-sdk-v5": "2.5.1",
+        "qiniu/php-sdk": "7.4.2",
+        "tencentcloud/tencentcloud-sdk-php": "3.0.594"
     },
     "autoload": {
         "psr-4": {

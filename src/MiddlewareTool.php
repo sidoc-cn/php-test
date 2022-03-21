@@ -84,9 +84,9 @@ class MiddlewareTool {
         // 作用域："abc.com" 可以在abc.com主域名之下的多级子域名有效
         //       ".abc.com" 只能在二级域名以及"www.abc.com"下有效
         // 参数secure：cookie是否只能通过https发送
-        // 参数httponly：是否只能通过http协议访问cookie
+        // 参数httponly：是否只能通过http协议访问cookie,此值必须设为false,否则前端js无法获取cookie
         // 配置详见：https://www.php.net/manual/zh/function.setcookie.php
-        setcookie("authorization","",$expires,'/',self::firstLevelDomain(),false,true);
+        setcookie("authorization",$token,$expires,'/',self::firstLevelDomain(),false,false);
     }
 
     /**

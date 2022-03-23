@@ -2,6 +2,7 @@
 
 namespace sidoc;
 
+use Exception;
 use Qcloud\Cos\Client;
 use think\facade\Env;
 use Throwable;
@@ -117,8 +118,16 @@ class TencenyunCos{
             $file = curl_exec($ch);
             curl_close($ch);
 
+            if(empty($file)){
+                throw new Exception("无法下载文件：".$link);
+            }
+
             // 保存至对象存储
-            // self::clien
+            $result = $client->upload(
+                $bucket,  // 存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
+                $toPath,  // 此处的 key 为对象键
+                $file
+            );
             
             // 请求成功,print_r打印的内容会被添加http请求结果后，因此此处必须注释
             // print_r($result);

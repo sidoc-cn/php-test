@@ -4,6 +4,8 @@ namespace sidoc;
 
 use think\facade\Cookie;
 use think\facade\Env;
+use think\facade\Log;
+use Throwable;
 
 // 中间件常用工具封装
 class MiddlewareTool {
@@ -108,14 +110,22 @@ class MiddlewareTool {
     // 获取一级域名
     static private function firstLevelDomain(){
 
-        $httpHost = $_SERVER['HTTP_HOST'];
-        if(filter_var($httpHost, FILTER_VALIDATE_IP)){ // 判断是否为ip
-            // 如果是ip
-            $domain = $httpHost;
-        }else{
-            // 如果是域名，则取顶级域名，以便兼容其下多级域名
-            $arr = explode(".",$httpHost);
-            $domain = $arr[count($arr)-2].".".$arr[count($arr)-1];
+        try{
+            $_SERVER['fdsafd'];
+            $httpHost = $_SERVER['HTTP_HOST'];
+            if(filter_var($httpHost, FILTER_VALIDATE_IP)){ // 判断是否为ip
+                // 如果是ip
+                $domain = $httpHost;
+            }else{
+                // 如果是域名，则取顶级域名，以便兼容其下多级域名
+                $arr = explode(".",$httpHost);
+                $domain = $arr[count($arr)-2].".".$arr[count($arr)-1];
+            }
+        }catch(Throwable $e){
+            Log::write('发生异常:-----------------------------------------------------------------------------------','error');
+            Log::write(json_encode($e->__toString(),JSON_UNESCAPED_UNICODE),'error');
+            Log::write(json_encode($_SERVER,JSON_UNESCAPED_UNICODE),'error');
+            throw $e;
         }
         return $domain;
     }

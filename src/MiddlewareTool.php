@@ -111,7 +111,6 @@ class MiddlewareTool {
     static private function firstLevelDomain(){
 
         try{
-            $_SERVER['fdsafd'];
             $httpHost = $_SERVER['HTTP_HOST'];
             if(filter_var($httpHost, FILTER_VALIDATE_IP)){ // 判断是否为ip
                 // 如果是ip

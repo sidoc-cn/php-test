@@ -2,6 +2,7 @@
 
 namespace sidoc;
 
+use Exception;
 
 // 远程调用
 class RemoteCallTools{
@@ -72,8 +73,6 @@ class RemoteCallTools{
     */
     static public function request($path,$param=[],$headers=[],$requestMethod="post"){
 
-        // curl详见：https://learnku.com/articles/30327
-
         // 初始化 curl
         $ch = curl_init();
 
@@ -116,6 +115,12 @@ class RemoteCallTools{
 
         // 执行请求
         $responseContent = curl_exec($ch);
+
+        // 获取请求状态信息
+        $httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+        if($httpCode != 200){
+            WorkWechat::reportException(new Exception('内部请求发生错误，错误码:'.$httpCode.'，请求地址：'.$path));
+        }
 
         // 关闭URL请求
         curl_close($ch);

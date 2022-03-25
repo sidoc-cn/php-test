@@ -78,9 +78,9 @@ class DatabaseBackup {
    
         $arr['id'] = $taskId;
         $arr['des'] = "数据备份完成，耗时".$timeConsuming."秒";
+        $arr['time'] = date("Y-m-d H:i:s");
         $arr['status'] = "normal";
-        $domain = Env::get('SIDOC_ADMIN_SERVICE');
-        RemoteCallTools::request($domain."/task/updateTask",$arr);
+        RemoteCallTools::request(Env::get('SIDOC_ADMIN_SERVICE')."/task/updateTask",$arr);
     }
 
     // 恢复

@@ -49,8 +49,8 @@ class SSLService{
             }
             self::updateTask($domain,"证书申请完成，过期时间为".intval(self::getExpiredTime($domain))."天后",date("Y-m-d H:i:s"),"normal");
         }else{
-            
-            $des = "证书还有".intval($diffDay)."天过期，暂时无须更新";
+            $date = date("Y-m-d H:i:s",time() + $diffDay);
+            $des = "证书还有".intval($diffDay)."天".$date."过期，暂时无须更新";
             self::updateTask($domain,$des,date("Y-m-d H:i:s"),"normal");
         }
     }
@@ -59,7 +59,7 @@ class SSLService{
      * 获取域名的过期时间
      *
      * @param [type] $domain
-     * @return void
+     * @return float
      */
     static private function getExpiredTime($domain){
 

@@ -21,7 +21,7 @@ class DatabaseBackup {
         $databaseName = Env::get('DATABASE.DATABASE');
         $time = date('Y-m-d_H:i:s');
         $backupPath  = app_path()."dataBackup/{$databaseName}-{$time}.sql";
-        $result = shell_exec("mysqldump --defaults-extra-file=/var/www/html/sidoc/app/dataBackup/mysql.conf {$databaseName} > {$backupPath} 2>&1"); // '2>&1'是让执行管道输出结果。
+        $result = shell_exec("mysqldump --defaults-extra-file=/var/www/html/{$projectName}/app/dataBackup/mysql.conf {$databaseName} > {$backupPath} 2>&1"); // '2>&1'是让执行管道输出结果。
         echo $result;
 
         // 0.2> 加密sql文件

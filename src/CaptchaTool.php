@@ -8,7 +8,7 @@ use Gregwar\Captcha\CaptchaBuilder;
 class CaptchaTool {
 
     /**
-     * 生成并获取图形验证码
+     * 生成并输出图形验证码，同时返回验证码文本
      * 
      * 官网：https://github.com/Gregwar/Captcha
      *
@@ -24,9 +24,8 @@ class CaptchaTool {
         $e = $builder->build();
         // 输出验证码图片
         $builder->output();
-        
+
         return $e->getPhrase(); // 获取验证码
     }
-
 
 }

@@ -23,14 +23,17 @@ class CaptchaTool {
 
         // 构建验证码
         $e = $builder->build();
-        // 输出验证码图片
+        // 输出验证码图片至前端
         $builder->output();
 
         // 保存验证码文本,5分钟后自动销毁
         $key = "captcha_".Guid::guidString(Tools::get_real_ip());
         $redis = RedisManger::instance(['select'=>1]);
         $redis->setex($key,300,$e->getPhrase());
-        return $key;
+
+        // 保存验证码校验key，此key只能保存于session中，因为当前函数需要向前端输出图片，因此无法再同时输出验证码文本
+        Session_start();
+        $_SESSION['captcha_key'] = $key;
     }
 
     /**
@@ -40,7 +43,10 @@ class CaptchaTool {
      * @param [type] $code 用户输入的验证码
      * @return void
      */
-    static public function imageVerify($key,$code) {
+    static public function imageVerify($code) {
+        
+        Session_start();
+        $key = $_SESSION['captcha_key'];
         
         $redis = RedisManger::instance(['select'=>1]);
         $captchaCode = $redis->get($key);

@@ -14,7 +14,7 @@ class CaptchaTool {
      *
      * @return void
      */
-    static public function image() {
+    static public function image($businessType) {
 
         $builder = new CaptchaBuilder();
         // 启用或禁用插值（默认启用），禁用会提交效率，但图像会更丑；
@@ -24,6 +24,8 @@ class CaptchaTool {
         $e = $builder->build();
         // 输出验证码图片
         $builder->output();
+
+        $key = $businessType + Tools::get_real_ip();
 
         return $e->getPhrase(); // 获取验证码
     }

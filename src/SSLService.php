@@ -47,7 +47,10 @@ class SSLService{
             foreach($cdnDomainList as $cdnDomain){
                 self::deployToCDN($domain,$cdnDomain);
             }
-            self::updateTask($domain,"证书申请完成，过期时间为".intval(self::getExpiredTime($domain))."天后",date("Y-m-d H:i:s"),"normal");
+
+            $diffDay = self::getExpiredTime($domain);
+            $date = date("Y-m-d H:i:s",time() + ($diffDay*86400));
+            self::updateTask($domain,"证书申请完成，过期时间为".intval($diffDay)."天(".$date.")后",date("Y-m-d H:i:s"),"normal");
         }else{
             $date = date("Y-m-d H:i:s",time() + ($diffDay*86400));
             $des = "证书还有".intval($diffDay)."天(".$date.")过期，暂时无须更新";

@@ -16,9 +16,9 @@ class CaptchaTool {
      */
     static public function image() {
 
-        // 创建并配置图形验证码对象
         $builder = new CaptchaBuilder();
-        $builder->setInterpolation(false); // 启用或禁用插值（默认启用），禁用会提交效率，但图像会更丑；
+        // 启用或禁用插值（默认启用），禁用会提交效率，但图像会更丑；
+        $builder->setInterpolation(false); 
 
         // 构建验证码
         $e = $builder->build();

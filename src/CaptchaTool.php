@@ -14,7 +14,7 @@ class CaptchaTool {
      *
      * @return void
      */
-    static  function image() {
+    static public function image() {
 
         // 创建并配置图形验证码对象
         $builder = new CaptchaBuilder();
@@ -26,6 +26,15 @@ class CaptchaTool {
         $builder->output();
 
         return $e->getPhrase(); // 获取验证码
+    }
+
+    /**
+     * 行为验证
+     *
+     * @return void
+     */
+    static public function behavior(){
+        # code...
     }
 
 }

@@ -8,7 +8,7 @@ use think\facade\Env;
 class DatabaseBackup {
 
     // 备份
-    static public function backup($projectName,$taskId) {
+    static public function backup($projectName,$taskId,$flag=null) {
 
         $t1 = microtime(true);
 
@@ -20,7 +20,12 @@ class DatabaseBackup {
         // 0.1> 备份数据库
         $databaseName = Env::get('DATABASE.DATABASE');
         $time = date('Y-m-d_H:i:s');
-        $backupPath  = app_path()."dataBackup/{$databaseName}-{$time}.sql";
+        if(empty($flag)){
+            $backupPath  = app_path()."dataBackup/{$databaseName}-{$time}.sql";
+        }else{
+            $backupPath  = app_path()."dataBackup/{$databaseName}_{$flag}-{$time}.sql";
+        }
+        
         $result = shell_exec("mysqldump --defaults-extra-file=/var/www/html/{$projectName}/app/dataBackup/mysql.conf {$databaseName} > {$backupPath} 2>&1"); // '2>&1'是让执行管道输出结果。
         echo $result;
 

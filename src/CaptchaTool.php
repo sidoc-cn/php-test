@@ -39,7 +39,6 @@ class CaptchaTool {
     /**
      * 图片验证码校验
      *
-     * @param [type] $key  用于读取验证码的key
      * @param [type] $code 用户输入的验证码
      * @return void
      */

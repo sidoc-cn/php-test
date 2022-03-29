@@ -15,14 +15,14 @@ class CaptchaTool {
      *
      * @return void
      */
-    static public function image() {
+    static public function image($width = 150, $height = 40) {
 
         $builder = new CaptchaBuilder();
         // 启用或禁用插值（默认启用），禁用会提交效率，但图像会更丑；
         $builder->setInterpolation(false); 
 
         // 构建验证码
-        $e = $builder->build();
+        $e = $builder->build($width,$height);
         // 输出验证码图片至前端
         $builder->output();
 

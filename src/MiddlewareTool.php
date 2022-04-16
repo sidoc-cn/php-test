@@ -17,7 +17,7 @@ class MiddlewareTool {
      * @param [type] $request
      * @return void
      */
-    static public function getToken($request) {
+    static public function getToken($request,$domain=null) {
 
         // 0.1> 从请求头中获取token,此方式仅适用于前后分离的项目
         $token = $request->header("authorization");
@@ -41,7 +41,7 @@ class MiddlewareTool {
         // 为了尽量保护token安全，token名称尽量使用不易被发现和使用的名称，此处使用t1作为token名称
         if(empty($token)){ 
             $token   = $request->param("t1"); 
-            self::configCookie($token);
+            self::configCookie($token,$domain);
         }
         return $token;
     }
@@ -72,7 +72,7 @@ class MiddlewareTool {
      * @param [type] $expires
      * @return void
      */
-    static private function configCookie($token) {
+    static private function configCookie($token,$domain=null) {
 
         // 默认设为36周有效期,按理说此处应设为永久有效，因此token的过期时间本身由用户服务系统决定
         // 微调token过期时间，使其在凌晨4点左右失效；避免在白天用户使用时突然失效，影响用户体验
@@ -88,7 +88,11 @@ class MiddlewareTool {
         // 参数secure：cookie是否只能通过https发送
         // 参数httponly：是否只能通过http协议访问cookie,此值必须设为false,否则前端js无法获取cookie
         // 配置详见：https://www.php.net/manual/zh/function.setcookie.php
-        setcookie("authorization",$token,$expires,'/',self::firstLevelDomain(),false,false);
+        if(empty($domain)){
+            $domain = self::firstLevelDomain();
+        }
+        setcookie("authorization",$token,$expires,'/',$domain,false,false);
+        
     }
 
     /**
@@ -107,10 +111,16 @@ class MiddlewareTool {
         }
     }
 
-    // 获取一级域名
+    // 
+    /**
+     * 获取一级域名（此函数不可靠，且存在安全隐患，已被废弃）
+     * 
+     * @return void
+     */
     static private function firstLevelDomain(){
 
         try{
+            // 注意：部分情况下，HTTP_HOST可能会为空，或者是错误的，例如搜索引擎抓取时；因为HTTP_HOST可由客户端控制，因此它也是不安全的；
             $httpHost = $_SERVER['HTTP_HOST'];
             if(filter_var($httpHost, FILTER_VALIDATE_IP)){ // 判断是否为ip
                 // 如果是ip

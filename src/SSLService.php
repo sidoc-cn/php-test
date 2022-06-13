@@ -66,6 +66,12 @@ class SSLService{
      */
     static private function getExpiredTime($domain){
 
+        // 0.0> 检查SSL证书文件是否存在，若SSL证书文件不存在，则返回1天，表明此证书急需更新，以使后续程序完成该证书的创建
+        $filePath = "/var/www/ssl/$domain";
+        if (!file_exists($filePath)) {
+            return 1; 
+        }
+
         // 0.1> 获取SSL证书信息 -----------------------
         $command = "openssl x509 -in /var/www/ssl/$domain -noout -dates";
         exec($command,$out,$status); 
@@ -124,6 +130,7 @@ class SSLService{
 
         // 0.2> 安装SSL证书 (复制证书至/var/www/ssl目录，并重启Nginx)
         $command = 'sudo /root/.acme.sh/acme.sh --install-cert -d '.$domain.' --key-file /var/www/ssl/'.$domain.'.key --fullchain-file /var/www/ssl/'.$domain.' --reloadcmd "service nginx force-reload" --force';
+        $out = [];
         exec($command,$out,$status);
         if($status != 0){
            Log::error($out);
@@ -133,6 +140,25 @@ class SSLService{
            self::updateTask($domain,$msg,date("Y-m-d H:i:s"),"error");
            return false;
         }
+        
+        // 0.3> 检查Nginx配置文件
+        $out = [];
+        exec("sudo /usr/sbin/nginx -t 2>&1",$out,$status); // 使用 2>&1 会将命令执行时的错误输出到$output并返回
+        if($status != 0){
+            Log::write("Nginx配置异常 - 无法进行重载,错误信息如下：");
+            Log::write($out);
+            throw new Exception("Nginx状态异常 - 无法进行重载，详见日志！");
+        }
+
+        // 0.4> 重载nginx配置文件（此操作不会影响nginx的持续运行）
+        $rout = [];
+        exec("sudo /bin/systemctl reload nginx 2>&1",$rout,$rstatus);
+        if($rstatus != 0){
+            Log::write("Nginx配置异常 - 无法进行重载,错误信息如下：");
+            Log::write($rout);
+            throw new Exception("Nginx状态异常 - 无法进行重载，详见日志！");
+        }
+
         return true;
     }
 

@@ -2,6 +2,7 @@
 
 namespace sidoc;
 
+use Exception;
 use think\facade\Env;
 
 class Seo{
@@ -68,7 +69,7 @@ class Seo{
         $result = json_decode($result);
 
         if($result->success <= 0){
-            WorkWechat::reportException("百度SEO推送链接失败","推送url为：".implode("\n", $urls));
+            WorkWechat::reportException(new Exception("百度SEO推送链接失败,推送url为：".implode("\n", $urls)."，错误为：".json_encode($result,JSON_UNESCAPED_UNICODE)));
         }
     }
 
@@ -91,7 +92,7 @@ class Seo{
         $result = json_decode($result);
 
         if($result->success <= 0){
-            WorkWechat::reportException("百度SEO推送链接失败","推送url为：".implode("\n", $urls));
+            WorkWechat::reportException(new Exception("百度SEO推送链接失败,推送url为：".implode("\n", $urls)."，错误为：".json_encode($result,JSON_UNESCAPED_UNICODE)));
         }
 
     }
@@ -115,7 +116,7 @@ class Seo{
         $result = json_decode($result);
 
         if($result->success <= 0){
-            WorkWechat::reportException("百度SEO删除链接失败","删除url为：".implode("\n", $urls));
+            WorkWechat::reportException(new Exception("百度SEO删除链接失败,删除url为：".implode("\n", $urls)."，错误为：".json_encode($result,JSON_UNESCAPED_UNICODE)));
         }
 
     }

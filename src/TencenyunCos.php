@@ -56,7 +56,7 @@ class TencenyunCos{
             );
             // 请求成功
             print_r($result);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             throw $e;
         }
     }
@@ -94,7 +94,7 @@ class TencenyunCos{
                 ));
                 // print_r($result);
             }
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             throw $e;
         }
     }

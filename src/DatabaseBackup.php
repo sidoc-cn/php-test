@@ -68,8 +68,10 @@ class DatabaseBackup {
             $suffix = pathinfo($file, PATHINFO_EXTENSION); // 获取文件后缀
             $path = $folder."/".$file;
             if($suffix == 'enc'){
-                // 上传
+                // 上传至腾迅云（从阿里ECS向腾迅云上传超过100M的大文件时，会报错“User network is too slow”，从而无法上传）
                 // TencenyunCos::pushObject($projectName."/database-backup/{$file}",$path);
+
+                // 上传至阿里云
                 AliyuncOss::uploadFile($projectName."/database-backup/{$file}",$path);
             }
             if($suffix == 'sql' || $suffix == 'enc'){

@@ -2,8 +2,8 @@
 
 namespace sidoc;
 
-use OSS\Core\OssException;
 use OSS\OssClient;
+use OSS\Core\OssException;
 use think\exception\HttpException;
 
 define("accessKeyId",aliyun_oss_key);

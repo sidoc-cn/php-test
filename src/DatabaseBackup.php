@@ -69,7 +69,7 @@ class DatabaseBackup {
             $path = $folder."/".$file;
             if($suffix == 'enc'){
                 // 上传
-                TencenyunCos::pushObject($projectName."/database-backup/{$file}",$path);
+                // TencenyunCos::pushObject($projectName."/database-backup/{$file}",$path);
                 AliyuncOss::uploadFile($projectName."/database-backup/{$file}",$path);
             }
             if($suffix == 'sql' || $suffix == 'enc'){

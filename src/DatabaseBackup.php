@@ -73,7 +73,7 @@ class DatabaseBackup {
                 AliyuncOss::uploadFile($projectName."/database-backup/{$file}",$path);
             }
             if($suffix == 'sql' || $suffix == 'enc'){
-                unlink($path); // 删除删除
+                unlink($path); // 删除文件
             }
         }
          

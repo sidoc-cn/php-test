@@ -11,7 +11,7 @@ define("accessKeySecret",aliyun_oss_secret);
 
 // 根据项目环境决定是否使用内网访问OSS; ECS内网访问OSS,速度快且流量免费；
 if(env == "sidoc"){
-    define("endpoint","oss-cn-beijing.aliyuncs.com"); // 外部访问OSS
+    define("endpoint","oss-cn-hangzhou.aliyuncs.com"); // 外部访问OSS
 }else{
     define("endpoint","oss-cn-beijing-internal.aliyuncs.com"); // 内网访问OSS
 }

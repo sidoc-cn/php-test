@@ -1,0 +1,10 @@
+
+## 查看指定端口的进程
+netstat -ntul | grep -w 9006
+
+## 杀死监听在指定端口上的进程
+kill -9 $(lsof -t -i:9006) 2>&1
+
+## 更新权限
+sudo chown -R siuser:siuser /var/www/html/php-tool-library
+

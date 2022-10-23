@@ -198,5 +198,20 @@ class Tools{
         return $arr;
     }
 
+    /**
+     * 输出函数调用堆栈
+     *
+     * @return void
+     */
+    static public function call_stack_trace(){
+        $array =debug_backtrace();
+        unset($array[0]);
+        $html = "";
+        foreach($array as $row){
+            $html .=$row['file'].':'.$row['line'].'行, 调用:'.$row['function']."<p>";
+        }
+        return $html;
+    }
+
 }
 

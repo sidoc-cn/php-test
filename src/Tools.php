@@ -2,6 +2,8 @@
 
 namespace sidoc;
 
+use think\facade\Env;
+
 class Tools{
 
     // 自定义密钥
@@ -204,13 +206,23 @@ class Tools{
      * @return void
      */
     static public function call_stack_trace(){
-        $array =debug_backtrace();
+        $array = debug_backtrace();
         unset($array[0]);
-        $html = "";
+        $stack = "";
         foreach($array as $row){
-            $html .=$row['file'].':'.$row['line'].'行, 调用:'.$row['function']."<p>";
+            if(array_key_exists('file',$row)){
+                $stack .= $row['file'].':'.$row['line'].'行, 调用:'.$row['function']."()<p>";
+            }
         }
-        return $html;
+
+        $html = '<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>调用堆栈 - sidoc</title>'.$stack.'</html>';
+
+        // 保存堆栈信息
+        $path = 'other/exception_stack/'.Guid::guidString().'.html';
+        TencenyunCos::pushObject($path,$html,'string');
+
+        // 返回堆栈信息访问路径地址
+        return Env::get('STATIC_RESOURCES_COMMON').'/'.$path;
     }
 
 }

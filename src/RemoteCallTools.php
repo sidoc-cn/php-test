@@ -119,7 +119,8 @@ class RemoteCallTools{
         // 获取请求状态信息
         $httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
         if($httpCode != 200){
-            WorkWechat::reportException(new Exception('内部请求发生错误，错误码:'.$httpCode.'，请求地址：'.$path));
+            $traceUrl = Tools::call_stack_trace();
+            WorkWechat::reportException(new Exception('内部请求发生错误，错误码:'.$httpCode.'，请求地址：'.$path),$traceUrl);
         }
 
         // 关闭URL请求

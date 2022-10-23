@@ -15,7 +15,7 @@ class WorkWechat {
     }
 
     // 发送异常消息给管理员
-    static public function reportException($exception){
+    static public function reportException($exception,$url=null){
         try{
             // 不要上报404、403等HTTP请求异常
             if($exception instanceof \think\exception\HttpException){
@@ -32,7 +32,7 @@ class WorkWechat {
             if(method_exists($exception,'getStatusCode')){
                 $message .= ("<div class=\"normal\">HTTP状态码：".$exception->getStatusCode()."</div>");
             }
-            self::sendMessageToAdmin("系统发生异常，请尽快处理！",$message,"异常上报");
+            self::sendMessageToAdmin("系统发生异常，请尽快处理！",$message,"异常上报",$url);
         }catch (Throwable $e){
             // 捕获所有异常，避免异常循环上报
             Log::error($e->__toString());
@@ -41,7 +41,7 @@ class WorkWechat {
 
 
     // 发送消息至管理员
-    static private function sendMessageToAdmin($title,$message,$messageType){
+    static private function sendMessageToAdmin($title,$message,$messageType,$url=null){
      
         $param = [
             "touser"=>'YANGWW',   // 消息接收人
@@ -50,7 +50,7 @@ class WorkWechat {
             "textcard"=>[             // 消息内容
                 "title"=>$title,
                 "description"=>$message,
-                "url"=>"https:www.sidoc.cn",
+                "url"=>$url?$url:"https:www.sidoc.cn",
                 "btntxt"=>$messageType
             ],
         ];

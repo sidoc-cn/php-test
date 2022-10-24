@@ -42,17 +42,23 @@ class TencenyunCos{
      * @param [type] $file
      * @return void
      */
-    static public function pushObject($path,$filePath){
+    static public function pushObject($path,$filePath,$fileType='file'){
 
         $cos = self::instanceClient();
         $bucket = $cos['bucket'];
         $client = $cos['client'];
-        
+
+        $content = '';
+        if($fileType === 'file'){
+            $content = fopen($filePath, 'rb');
+        }else{
+            $content = $filePath;
+        }
         try {
             $result = $client->upload(
                 $bucket,  // 存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
                 $path,    // 此处的 key 为对象键
-                fopen($filePath, 'rb')
+                $content
             );
             // 请求成功
             print_r($result);

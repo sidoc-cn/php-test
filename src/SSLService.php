@@ -114,6 +114,7 @@ class SSLService{
          * 3.0版本以后的acme.sh默认申请的证书是ZeroSSL，而该证书目前在申请过程中有一定概率发生错误，因此可使用 --server letsencrypt 来指定申请 Let's Encrypt 证书；
          * 注(2022年4月2日更新)：不要申请 Let's Encrypt 证书，因为其兼容性差，例如windows server 2008系统就不支持 Let's Encrypt 证书；
          * 注(2022年4月4日更新)：dns模式下，添加dns记录后，acme.sh会使用cloudflare public dns或google dns来检查TXT记录是否生效；该过程有一定概率可能超时或卡住，保险起见可以使用“--dnssleep 300”选项禁用此检查，该选项的意思是不要检查TXT记录是否生效，直接等待300秒后开始申请SSL证书即可，详见：https://github.com/acmesh-official/acme.sh/wiki/dnscheck
+         * 注(2023年6月2日更新)：Acme.sh申请证书时会在你的域名解析中添加一条主机记录为 _acme-challenge 的TXT记录，并在SSL证书申请完成后将其删除，如果因为意外原因没有删除 _acme-challenge 记录，则下次申请SSL证书时将失败，因为下次验证 _acme-challenge 主机记录时会得到一个错误的TXT结果；因此在申请证书前务必确认你的域名解析中没有 _acme-challenge 主机记录；
          */
         // $command = "sudo /root/.acme.sh/acme.sh --issue --dns dns_ali -d '$domain' -d '*.$domain' --force --server letsencrypt";
         $command = "sudo /root/.acme.sh/acme.sh --issue --dns dns_ali -d '$domain' -d '*.$domain' --force";

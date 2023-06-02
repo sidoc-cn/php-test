@@ -130,7 +130,10 @@ class SSLService{
         }
 
         // 0.2> 安装SSL证书 (复制证书至/var/www/ssl目录，并重启Nginx)
-        $command = 'sudo /root/.acme.sh/acme.sh --install-cert -d '.$domain.' --key-file /var/www/ssl/'.$domain.'.key --fullchain-file /var/www/ssl/'.$domain.' --reloadcmd "service nginx force-reload" --force';
+        // 默认生成的SSL证书放在安装目录 ~/.acme.sh/ 下, 请不要让Nginx的SSL配置直接指向此目录下的文件，因为随着Acme.sh的升级，此目录可能会发生变化；
+        // 如下命令 --install-cert 是将证书文件会复制到其它位置，以供Nginx使用；
+        // 注(2023年6月2日更新)：及少数意外情况下，--install-cert命令会错误的将以前申请的旧证书复制到指定位置；这会导致SSL证书虽然申请成功，但最终使用的却仍然是过期的旧证书；造成这种情况的原因是安装目录 ~/.acme.sh/ 下存在太多垃圾证书，Acme.sh错误的复制了旧的证书，因此清理安装目录 ~/.acme.sh/ 下的所有证书文件，然后重新执行证书申请流程即可；
+        $command = 'sudo /root/.acme.sh/acme.sh --install-cert -d '.$domain.' --key-file /var/www/ssl/'.$domain.'.key --fullchain-file /var/www/ssl/'.$domain.' --force';
         $out = [];
         exec($command,$out,$status);
         if($status != 0){

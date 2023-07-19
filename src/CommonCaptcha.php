@@ -11,13 +11,13 @@ class CommonCaptcha{
     * @param string $verify_type   验证码类型：graphic(图片验证)、tCaptcha(腾迅云行为验证)
     * @return \think\response\Json
     */
-   static public function verify($verify_type="tCaptcha"){
+   static public function verify($data,$verify_type="tCaptcha"){
 
       switch ($verify_type){
          case "graphic":{ // 图形验证码
             $verify = request()->param("captcha");
             if(!captcha_check($verify)){
-               return JsonUtil::json_response("","验证码错误", STATUS_FAILED);
+               return JsonUtil::json_response($data,"验证码错误", STATUS_FAILED_NM);
             };
             break;
          }
@@ -26,12 +26,12 @@ class CommonCaptcha{
             $randstr = request()->param("randstr");
             $verifyResult = TCaptcha::verify($ticket,$randstr);
             if($verifyResult != 1){
-               return JsonUtil::json_response("","行为验证错误，重新验证", STATUS_FAILED);
+               return JsonUtil::json_response($data,"验证失败，请重新验证", STATUS_FAILED_NM);
             }
             break;
          }
          default:{
-            return JsonUtil::json_response("","验证码类型错误", STATUS_FAILED);
+            return JsonUtil::json_response($data,"验证码类型错误", STATUS_FAILED);
          }
       }
    }

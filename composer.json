@@ -15,7 +15,7 @@
         "qcloud/cos-sdk-v5": "2.5.1",
         "qiniu/php-sdk": "7.4.2",
         "gregwar/captcha": "1.*",
-        "tencentcloud/tencentcloud-sdk-php": "3.0.594",
+        "tencentcloud/tencentcloud-sdk-php": "3.0.10",
         "aliyuncs/oss-sdk-php": "^2.6"
     },
     "autoload": {
